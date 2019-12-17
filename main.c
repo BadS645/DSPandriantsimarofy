@@ -45,7 +45,6 @@
 
 
 
-
 void __attribute__((interrupt,auto_psv)) _INT1Interrupt(void);
 void __attribute__((interrupt,auto_psv)) _INT2Interrupt(void);
 void __attribute__((interrupt,auto_psv)) _INT3Interrupt(void);
@@ -66,10 +65,10 @@ void DCIinit(void);
 
 void wait(unsigned int);
 
+int flagvolume=0;
 int volume  = 23;
-int chang_volume = 0;
 int pseudo_sin[]={0x0000,0x278D,0x4B3B,0x678D,0x79BB,0x7FFF,0x79BB,0x678D,0x4B3B,0x278D,0x0000,0xD873,0xB4C5,0x9873,0x8645,0x8001,0x8645,0x9873,0xB4C5,0xD873};
-
+int s;
 void main(void) 
 {
     InitBoutonLed();
@@ -125,7 +124,8 @@ void InitBoutonLed(void)
 }
 void __attribute__((interrupt,auto_psv)) _INT1Interrupt(void)
 {
-    chang_volume = 1;
+    if(s>19)s=0;
+    
     if(volume>0)volume--;
     char pass[3] = {0x30,0x30,0x00};
     pass[0]+=volume/10;
@@ -137,11 +137,15 @@ void __attribute__((interrupt,auto_psv)) _INT1Interrupt(void)
     _LCDwritestr("VOLUME: ");
     _LCDwritestr(pass);
     
+    flagvolume=1;
+    
+    s++;
     IFS1bits.INT1IF=0; // acquittement FLAG
 }
 void __attribute__((interrupt,auto_psv)) _INT2Interrupt(void)
 {
-    chang_volume = 1;
+    if(s>19)s=0;
+    
     if(volume<31)volume++;
     char pass[3] = {0x30,0x30,0x00};
     pass[0]+=volume/10;
@@ -153,7 +157,10 @@ void __attribute__((interrupt,auto_psv)) _INT2Interrupt(void)
     _LCDwritestr("VOLUME: ");
     _LCDwritestr(pass);
     
+    flagvolume=1;
     
+    
+    s++;
     IFS1bits.INT2IF=0; // acquittement FLAG
 }
 void __attribute__((interrupt,auto_psv)) _INT3Interrupt(void)
@@ -174,20 +181,25 @@ void __attribute__((interrupt,auto_psv)) _INT4Interrupt(void)
 }
 
 void __attribute__((interrupt,auto_psv)) _DCIInterrupt(void)
-{
-    static int s=0; //variable pour defiler dans le sinus
+{   
     if(s>19)s=0;
-    int datcom=0; //choix entre envoie de commande et envoie de données;
+    
     int val = pseudo_sin[s]&(~0x0001); //on met 0 sur le dernier bit car si on met à 1, on demande une commande
-    if(chang_volume)
+    
+    if(flagvolume==1)
     {
-        val = val|1; //on remet 1 comme on va envoyer une commande de changement de valeur
-        datcom = 0x0700|((0x00ff&volume)*4); //*4 pour decaler de 2bit car slm et srm tjrs = 0; registre 7 pour le reglage du gain
-        chang_volume=0;
+        TXBUF0=(pseudo_sin[s]&0xFFFE)|1; //pour être sûr que le dernier bit est a 1;
+        TXBUF1=0x0700|((0x00ff&volume)*4);//*4 pour decaler de 2bit car slm et srm tjrs = 0; registre 7 pour le reglage du gain
+        flagvolume=0;
     }
-    TXBUF0=val;
-    TXBUF1=datcom;
+    else
+    {
+        TXBUF0=val;
+        TXBUF1=0;
+    }
+    
     s++;
+    
     IFS2bits.DCIIF=0; //remise  à zero du flag
 }
 

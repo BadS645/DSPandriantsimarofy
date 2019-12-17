@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=tpDSPICDEM_andri_mbaye.X
+PROJECTNAME=DSPandriantsimarofy
 
 # Active Configuration
 DEFAULTCONF=default
