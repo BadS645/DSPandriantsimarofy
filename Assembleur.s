@@ -20,16 +20,16 @@
     push W14
     push W15
     
-    ;W0 contiendra le contenu à envoyer dans TXBUF0
-    ;W1 contiendra les données reçu de RXBUF0
-    ;W2 contiendra le contenu à envoyer dans TXBUF1
+    ;W0 contiendra le contenu Ã  envoyer dans TXBUF0
+    ;W1 contiendra les donnÃ©es reÃ§u de RXBUF0
+    ;W2 contiendra le contenu Ã  envoyer dans TXBUF1
 .global __DCIInterrupt    
 __DCIInterrupt:
     MOV RXBUF0, W1
     MOV #0xFFFE, W3
     AND W3, W1, W0
     MOV #0, W2 
-    ;MOV W0, TXBUF0
+    MOV W0, TXBUF0
     MOV W2, TXBUF1
     bclr IFS2, #DCIIF
     
