@@ -19,6 +19,8 @@
     ;W2 contiendra le contenu a  envoyer dans TXBUF1
    
 __DCIInterrupt:
+    ;en passe en shadow pour conserver les valeurs des registre en dehors de
+    ;l'interruption
     push W0
     push W1
     push W2
@@ -27,18 +29,28 @@ __DCIInterrupt:
     push W5
     push W6
     
+    ;on recupere le signal (la donnée a l instant t) recu du buffer de reception
+    ;puis on fait un masque pour avoir le dernier bit=0
     MOV RXBUF0, W1
     MOV #0xFFFE, W3
     AND W3, W1, W0
     
+    ;on verifie qu il n'ya pas de changement de volume
+    ;si on a change de volume, on va dans partie changvol(changement de volume)
     btss _flagvolume, #1
     bra changvol
     
+    ;on va mettre la valeur de reception apres masue dans le buffer de 
+    ;transmission et on met 0 dans TXBUF1 comme on n a pas de commande
+    ;on se lie ensuite directement au fin de l'interruption car on change pas
+    ;de volume
     MOV #0, W2 
     MOV W0, TXBUF0
     MOV W2, TXBUF1
     bra fin_interrupt
     
+    ;traduction assembleur de TXBUF0=val|1; TXBUF1=0x0700|((0x00ff&volume)*4);
+    ;trop long a expliquer
 changvol:
     mov #1, W4
     IOR W0,W4,W0
@@ -52,6 +64,8 @@ changvol:
     MOV W0, TXBUF0
     MOV W2, TXBUF1
     
+    ;on reinitialise le flag du DCI et on restitue les valeurs des registres 
+    ;avant l'interruption
  fin_interrupt:   
     bclr IFS2, #DCIIF
     pop W6
@@ -64,7 +78,7 @@ changvol:
     
     retfie
 
-    
+
     
 
 

@@ -49,6 +49,7 @@ void __attribute__((interrupt,auto_psv)) _INT1Interrupt(void);
 void __attribute__((interrupt,auto_psv)) _INT2Interrupt(void);
 void __attribute__((interrupt,auto_psv)) _INT3Interrupt(void);
 void __attribute__((interrupt,auto_psv)) _INT4Interrupt(void);
+void __attribute__((interrupt,auto_psv)) _DCIInterrupt(void);
 
 void InitBoutonLed(void);
 void LCDinit(void);
@@ -62,6 +63,7 @@ void LCDgoto(int, int);
 void _LCDwritestr(char []);
 
 void DCIinit(void);
+void BuffCircInit(void);
 
 void wait(unsigned int);
 
@@ -69,11 +71,21 @@ int flagvolume=0;
 int volume  = 23;
 int pseudo_sin[]={0x0000,0x278D,0x4B3B,0x678D,0x79BB,0x7FFF,0x79BB,0x678D,0x4B3B,0x278D,0x0000,0xD873,0xB4C5,0x9873,0x8645,0x8001,0x8645,0x9873,0xB4C5,0xD873};
 int s;
+
+int debutX;
+int debutY;
+int finX;
+int finY;
+
 void main(void) 
 {
+    //fonction d'initialisation
     InitBoutonLed();
     LCDinit();
     DCIinit();
+    BuffCircInit();
+    
+    //affichage a l'allumage
     LCDhomeclear();
     LCDgoto(0,0);
     char pass[3] = {0x30,0x30,0x00};
@@ -255,33 +267,38 @@ void DCIinit(void)
     DCICON1bits.DCIEN=1;
     
     while(DCISTATbits.TMPTY==0);
-    
-    //----------à compléter
-    
-    
-    
+      
     //registre4
     TXBUF0=0x0001;
     TXBUF1=0x0413;
     while(DCISTATbits.TMPTY==0);
     
+       //registre2
+    TXBUF0=0x0001;
+    TXBUF1=0x0200;
+    while(DCISTATbits.TMPTY==0);   
+    
     //registre1
     TXBUF0=0x0001;
     TXBUF1=0x010A;
-    while(DCISTATbits.TMPTY==0);
+    while(DCISTATbits.TMPTY==0);  
+    
    
     //registre5
     TXBUF0=0x0001;
     TXBUF1=0x0547;
     while(DCISTATbits.TMPTY==0);
+    
     //registre6
     TXBUF0=0x0001;
     TXBUF1=0x065E;
     while(DCISTATbits.TMPTY==0);
+    
     //registre7
     TXBUF0=0x0001;
     TXBUF1=0x075C;
     while(DCISTATbits.TMPTY==0);
+    
     //registre9
     TXBUF0=0x0001;
     TXBUF1=0x0900;
@@ -293,6 +310,33 @@ void DCIinit(void)
     IEC2bits.DCIIE=1;  //autorisation de l'intéruption   
 }
 
+void BuffCircInit(void)
+{
+    //configuration CORCON 
+    CORCONbits.US=0;
+    CORCONbits.SATA=1;
+    CORCONbits.SATB=1;
+    CORCONbits.SATDW=1;
+    CORCONbits.ACCSAT=0;
+    
+    //configuration de MODCON
+    MODCONbits.XMODEN=1;    //active l'adressage circulaire sur la memoire X
+    MODCONbits.YMODEN=1;    //active l'adressage circulaire sur la memoire Y
+    MODCONbits.BWM=0xF;     //adressage inversé de bit desactivé
+    MODCONbits.YWM=0xA;     //W10 pour d'adressage circulaire pour Y
+    MODCONbits.XWM=0x9;     //W9 pour d'adressage circulaire pour X
+    
+    //configuration  de la memoire X
+    XMODSRT=debutX&(0xfffe);     //on defini l'adresse de debut X le dernier bit
+                                 //le dernier bit est lu en tant que 0
+    XMODEND=finX&(0xfffe);       //on defini l'adresse de fin de X
+    
+    //configuration de la memoire Y
+    YMODSRT=debutY&(0xfffe);     //on defini l'adresse de debut Y le dernier bit
+                                 //le dernier bit est lu en tant que 0
+    YMODEND=finY&(0xfffe);       //on defini l'adresse de fin de Y
+    
+}
 
 void _LCDwritecmd(char c)
 {
