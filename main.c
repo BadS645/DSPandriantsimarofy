@@ -38,6 +38,7 @@
 
 #include <xc.h>
 
+#define RESET       0x80
 #define HOMECLEAR   0x82
 #define WRITECHAR   0xA8
 #define CURSBLINK   0xAD
@@ -69,7 +70,9 @@ void wait(unsigned int);
 
 int flagvolume=0;
 int volume  = 23;
-int pseudo_sin[]={0x0000,0x278D,0x4B3B,0x678D,0x79BB,0x7FFF,0x79BB,0x678D,0x4B3B,0x278D,0x0000,0xD873,0xB4C5,0x9873,0x8645,0x8001,0x8645,0x9873,0xB4C5,0xD873};
+int pseudo_sin[]={0x0000,0x278D,0x4B3B,0x678D,0x79BB,0x7FFF,0x79BB,0x678D,
+                  0x4B3B,0x278D,0x0000,0xD873,0xB4C5,0x9873,0x8645,0x8001,
+                  0x8645,0x9873,0xB4C5,0xD873};
 int s;
 
 int debutX;
@@ -192,16 +195,19 @@ void __attribute__((interrupt,auto_psv)) _INT4Interrupt(void)
     _INT4IF=0; // acquittement FLAG
 }
 
-/*void __attribute__((interrupt,auto_psv)) _DCIInterrupt(void)
+void __attribute__((interrupt,auto_psv)) _DCIInterrupt(void)
 {   
     if(s>19)s=0;
     
-    int val = pseudo_sin[s]&(~0x0001); //on met 0 sur le dernier bit car si on met à 1, on demande une commande
+    int val = pseudo_sin[s]&(~0x0001); //on met 0 sur le dernier bit car si on 
+                                       //met à 1, on demande une commande
     
     if(flagvolume==1)
     {
         TXBUF0=val|1; //pour être sûr que le dernier bit est a 1;
-        TXBUF1=0x0700|((0x00ff&volume)*4);//*4 pour decaler de 2bit car slm et srm tjrs = 0; registre 7 pour le reglage du gain
+        TXBUF1=0x0700|((0x00ff&volume)*4);//*4 pour decaler de 2bit car slm et 
+ *                                        //srm tjrs = 0; registre 7 pour le 
+ *                                        //reglage du gain
         flagvolume=0;
     }
     else
@@ -213,7 +219,7 @@ void __attribute__((interrupt,auto_psv)) _INT4Interrupt(void)
     s++;
     
     IFS2bits.DCIIF=0; //remise  à zero du flag
-}*/
+}
 
 void LCDinit()
 {
@@ -313,13 +319,20 @@ void DCIinit(void)
 void BuffCircInit(void)
 {
     //configuration CORCON 
-    CORCONbits.US=0;
-    CORCONbits.SATA=1;
-    CORCONbits.SATB=1;
-    CORCONbits.SATDW=1;
-    CORCONbits.ACCSAT=0;
+    
+    /*comme on est limité en zone mémoire, on va saturé nos accumulateur et la 
+     taille des données écrites pour assurer un non débordement.*/
+    CORCONbits.US=0;        //pour dire que les données peuvent être signées
+    CORCONbits.SATA=1;      //on active la saturation de l'accumulateur A
+    CORCONbits.SATB=1;      //on active la saturation de l'accumulateur B
+    CORCONbits.SATDW=1;     //on limite la taille des données écrites
+    CORCONbits.ACCSAT=0;    //pour l'instant on a mis une saturation normal, on
+                            //ne comprends pas encore l'effet de la haute 
+                            //saturation
     
     //configuration de MODCON
+    /*cette étape consiste juste à activer l'adressage circulaire des mémoire 
+     sur les zones mémoire prises en compte.*/
     MODCONbits.XMODEN=1;    //active l'adressage circulaire sur la memoire X
     MODCONbits.YMODEN=1;    //active l'adressage circulaire sur la memoire Y
     MODCONbits.BWM=0xF;     //adressage inversé de bit desactivé
@@ -366,7 +379,7 @@ void _LCDbitmap(int n)
 
 void LCDreset(void)
 {
-    
+    _LCDwritecmd(RESET);
 }
 
 void LCDhome(void)

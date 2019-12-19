@@ -1,27 +1,21 @@
-Microchip Technology Inc, v1.34 (A)
+Microchip Technology Inc, v1.35 (A)
 
 Tool Name:
-  c:\program files (x86)\microchip\xc16\v1.34\bin\bin\..\bin/elf-ld.exe
+  d:\program files (x86)\microchip\xc16\v1.35\bin\bin\..\bin/elf-ld.exe
 
 Command:
   -p30F6014 \
   -o \
   dist/default/production/DSPandriantsimarofy.production.elf \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/.. \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib/PIC24E \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../support/PIC24E/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib/PIC24F \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../support/PIC24F/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib/PIC24H \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../support/PIC24H/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib/dsPIC30F \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../support/dsPIC30F/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../support/dsPIC33C/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib/dsPIC33E \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../support/dsPIC33E/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib/dsPIC33F \
-  -Lc:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../support/dsPIC33F/gld \
+  -Ld:/program files (x86)/microchip/xc16/v1.35/bin/bin/.. \
+  -Ld:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib \
+  -Ld:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../support/PIC24E/gld \
+  -Ld:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../support/PIC24F/gld \
+  -Ld:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../support/PIC24H/gld \
+  -Ld:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../support/dsPIC30F/gld \
+  -Ld:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../support/dsPIC33C/gld \
+  -Ld:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../support/dsPIC33E/gld \
+  -Ld:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../support/dsPIC33F/gld \
   build/default/production/main.o \
   build/default/production/Assembleur.o \
   --defsym=__MPLAB_BUILD=1 \
@@ -47,13 +41,15 @@ Command:
   --library=lega-c-elf \
   -end-group \
 
+
+Optional library libp30F6014.a not found
 Archive member included because of file (symbol)
 
-c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
+d:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
                               (__resetPRI)
-c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
-                              c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o) (__data_init_standard)
-c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
+d:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
+                              d:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o) (__data_init_standard)
+d:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
                               (__crt_start_mode_normal)
 
 
@@ -77,7 +73,7 @@ CodeGuard EEPROM Memory:
   boot    (none)
 
 
-xc16-ld 1.34 (A)
+xc16-ld 1.35 (A)
 
 "program" Memory  [Origin = 0x100, Length = 0x17f00]
 
@@ -85,10 +81,10 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x100               0x2b4           0x40e  (1038)
 .const                       0x3b4                0x18            0x24  (36)
-.text                        0x3cc               0x2f8           0x474  (1140)
-.dinit                       0x6c4                0x32            0x4b  (75)
+.text                        0x3cc               0x2fc           0x47a  (1146)
+.dinit                       0x6c8                0x32            0x4b  (75)
 
-                 Total "program" memory used (bytes):          0x8f1  (2289) 1%
+                 Total "program" memory used (bytes):          0x8f7  (2295) 1%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x2000]
@@ -156,9 +152,9 @@ External Symbols in Program Memory (by address):
                   0x000618                  __LCDwritestr
                   0x00063e                  __LCDbitmap
                   0x000646                  _LCDreset
-                  0x00064c                  _LCDhome
-                  0x000658                  _LCDhomeclear
-                  0x000662                  _LCDgoto
+                  0x000650                  _LCDhome
+                  0x00065c                  _LCDhomeclear
+                  0x000666                  _LCDgoto
                   0xf8000a                  __FGS.sec
 
 External Symbols in Program Memory (by name):
@@ -166,9 +162,9 @@ External Symbols in Program Memory (by name):
                   0x000598                  _BuffCircInit
                   0x0004c4                  _DCIinit
                   0x000434                  _InitBoutonLed
-                  0x000662                  _LCDgoto
-                  0x00064c                  _LCDhome
-                  0x000658                  _LCDhomeclear
+                  0x000666                  _LCDgoto
+                  0x000650                  _LCDhome
+                  0x00065c                  _LCDhomeclear
                   0x000482                  _LCDinit
                   0x000646                  _LCDreset
                   0x0003ae                  __DefaultInterrupt
@@ -216,8 +212,8 @@ Linker script and memory map
 LOAD build/default/production/main.o
 LOAD build/default/production/Assembleur.o
                     0x0001                  __MPLAB_BUILD = 0x1
-LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib/dsPIC30F\libp30F6014-elf.a
-LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libfx-elf.a
+LOAD p30F6014
+LOAD d:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libfx-elf.a
                     0x8005c0                  __FUID0 = 0x8005c0
                     0x8005c2                  __FUID1 = 0x8005c2
                     0x8005c4                  __FUID2 = 0x8005c4
@@ -245,11 +241,11 @@ LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libfx-elf.a
 
 .text             0x000100        0x2b4
  *(.init)
- .init            0x000100         0x4c c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
+ .init            0x000100         0x4c d:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
                   0x000100                  __resetPRI
                   0x000100                  __reset
                   0x00013c                  __psv_init
- .init            0x00014c         0x7c c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
+ .init            0x00014c         0x7c d:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
                   0x000152                  __data_init_standard
                   0x000152                  __data_init
  *(.user_init)
@@ -267,7 +263,7 @@ LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libfx-elf.a
  *(.libdsp)
  *(.lib*)
  .libpic30_crt_start_mode
-                  0x0003b2          0x2 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
+                  0x0003b2          0x2 d:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
                   0x0003b2                  __crt_start_mode
                   0x0003b2                  __crt_start_mode_normal
 
@@ -318,10 +314,10 @@ userdata
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x2315
+.debug_info       0x000000       0x2323
  *(.debug_info)
- .debug_info      0x000000       0x2290 build/default/production/main.o
- .debug_info      0x002290         0x85 build/default/production/Assembleur.o
+ .debug_info      0x000000       0x2297 build/default/production/main.o
+ .debug_info      0x002297         0x8c build/default/production/Assembleur.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x1f5
@@ -329,10 +325,10 @@ userdata
  .debug_abbrev    0x000000        0x1e1 build/default/production/main.o
  .debug_abbrev    0x0001e1         0x14 build/default/production/Assembleur.o
 
-.debug_line       0x000000        0x21c
+.debug_line       0x000000        0x21d
  *(.debug_line)
- .debug_line      0x000000        0x1c0 build/default/production/main.o
- .debug_line      0x0001c0         0x5c build/default/production/Assembleur.o
+ .debug_line      0x000000        0x1c1 build/default/production/main.o
+ .debug_line      0x0001c1         0x5c build/default/production/Assembleur.o
 
 .debug_frame      0x000000        0x2ac
  *(.debug_frame)
@@ -1362,9 +1358,9 @@ userdata
                     0x0216                  UART2 = 0x216
                     0x0216                  _UART2 = 0x216
 START GROUP
-LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a
-LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\libm-elf.a
-LOAD c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-c-elf.a
+LOAD d:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a
+LOAD d:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a
+LOAD d:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-c-elf.a
 END GROUP
 OUTPUT(dist/default/production/DSPandriantsimarofy.production.elf elf32-pic30)
 LOAD /CW/_FGS
@@ -1381,9 +1377,9 @@ __c30_signature
  __c30_signature
                   0x0002e8          0x6 build/default/production/main.o
  __c30_signature
-                  0x0002ee          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
+                  0x0002ee          0x6 d:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
  __c30_signature
-                  0x0002f4          0x6 c:/program files (x86)/microchip/xc16/v1.34/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
+                  0x0002f4          0x6 d:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
 
 .nbss               0x0800          0xc
  .nbss              0x0800          0xc build/default/production/main.o
@@ -1439,8 +1435,8 @@ __c30_signature
 .const              0x83b4         0x18 load address 0x0003b4  
  .const             0x83b4         0x18 build/default/production/main.o
 
-.text             0x0003cc        0x2f8
- .text            0x0003cc        0x2b0 build/default/production/main.o
+.text             0x0003cc        0x2fc
+ .text            0x0003cc        0x2b4 build/default/production/main.o
                   0x0003cc                  _main
                   0x000434                  _InitBoutonLed
                   0x000482                  _LCDinit
@@ -1452,10 +1448,10 @@ __c30_signature
                   0x000618                  __LCDwritestr
                   0x00063e                  __LCDbitmap
                   0x000646                  _LCDreset
-                  0x00064c                  _LCDhome
-                  0x000658                  _LCDhomeclear
-                  0x000662                  _LCDgoto
- .text            0x00067c         0x48 build/default/production/Assembleur.o
+                  0x000650                  _LCDhome
+                  0x00065c                  _LCDhomeclear
+                  0x000666                  _LCDgoto
+ .text            0x000680         0x48 build/default/production/Assembleur.o
 
-.dinit            0x0006c4         0x32
- .dinit           0x0006c4         0x32 data_init
+.dinit            0x0006c8         0x32
+ .dinit           0x0006c8         0x32 data_init

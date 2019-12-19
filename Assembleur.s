@@ -51,6 +51,7 @@ __DCIInterrupt:
     
     ;traduction assembleur de TXBUF0=val|1; TXBUF1=0x0700|((0x00ff&volume)*4);
     ;trop long a expliquer
+    ;rappel: val est dans W0
 changvol:
     mov #1, W4
     IOR W0,W4,W0
@@ -66,8 +67,9 @@ changvol:
     
     ;on reinitialise le flag du DCI et on restitue les valeurs des registres 
     ;avant l'interruption
- fin_interrupt:   
+fin_interrupt:   
     bclr IFS2, #DCIIF
+    
     pop W6
     pop W5
     pop W4
