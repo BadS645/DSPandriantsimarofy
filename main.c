@@ -195,7 +195,7 @@ void __attribute__((interrupt,auto_psv)) _INT4Interrupt(void)
     _INT4IF=0; // acquittement FLAG
 }
 
-void __attribute__((interrupt,auto_psv)) _DCIInterrupt(void)
+/*void __attribute__((interrupt,auto_psv)) _DCIInterrupt(void)
 {   
     if(s>19)s=0;
     
@@ -206,8 +206,8 @@ void __attribute__((interrupt,auto_psv)) _DCIInterrupt(void)
     {
         TXBUF0=val|1; //pour être sûr que le dernier bit est a 1;
         TXBUF1=0x0700|((0x00ff&volume)*4);//*4 pour decaler de 2bit car slm et 
- *                                        //srm tjrs = 0; registre 7 pour le 
- *                                        //reglage du gain
+                                          //srm tjrs = 0; registre 7 pour le 
+                                          //reglage du gain
         flagvolume=0;
     }
     else
@@ -219,7 +219,7 @@ void __attribute__((interrupt,auto_psv)) _DCIInterrupt(void)
     s++;
     
     IFS2bits.DCIIF=0; //remise  à zero du flag
-}
+}*/
 
 void LCDinit()
 {
